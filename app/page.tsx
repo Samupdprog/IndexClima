@@ -242,19 +242,12 @@ export default function IndexClimaPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <motion.header
+      <header
         ref={headerRef}
         className="bg-transparent backdrop-blur-xl border-white border-b-2 shadow-lg fixed top-0 z-50 w-full"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <motion.div
-            className="flex items-center space-x-2"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.2 }}
-          >
+          <div className="flex items-center space-x-2">
             <a href="#inicio">
               <Image
                 src={effectiveNav ? "/logohorizontalcolor.png" : "/logohorizontalblanco.png"}
@@ -263,117 +256,75 @@ export default function IndexClimaPage() {
                 height={200}
               />
             </a>
-          </motion.div>
-
+          </div>
           {/* Desktop Nav */}
           <nav
             className={`hidden md:flex items-center space-x-8 text-sm font-bold transition-colors duration-300 ${
               effectiveNav ? "text-black" : "text-white"
             }`}
           >
-            {[
-              { href: "#inicio", text: "Inicio" },
-              { href: "#empresa", text: "Empresa" },
-              { href: "#servicios", text: "Servicios" },
-              { href: "#contacto", text: "Contacto" },
-            ].map((item, index) => (
-              <motion.a
-                key={item.href}
-                href={item.href}
-                className="relative py-2 hover:text-orange-500 transition-colors duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                {item.text}
-                <motion.span
-                  className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500"
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.a>
-            ))}
+            <a href="#inicio" className="hover:underline">Inicio</a>
+            <a href="#empresa" className="hover:underline">Empresa</a>
+            <a href="#servicios" className="hover:underline">Servicios</a>
+            <a href="#contacto" className="hover:underline">Contacto</a>
           </nav>
-
-          {/* Mobile Menu Button */}
-          <HamburgerMenu isOpen={menuOpen} toggleMenu={toggleMenu} effectiveNav={effectiveNav} />
-        </div>
-
-        {/* Mobile Menu Overlay */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              className="fixed inset-0 bg-black bg-opacity-90 z-40 flex items-center justify-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.nav
-                className="w-full px-4 py-8"
-                initial="closed"
-                animate="open"
-                exit="closed"
-                variants={menuVariants}
+          {/* Mobile Hamburger */}
+          <button
+            className="md:hidden flex items-center text-2xl"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Abrir menú"
+          >
+            {menuOpen ? (
+              // SVG CLOSE
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={`lucide lucide-x-icon lucide-x transition-transform duration-300 rotate-90 ${effectiveNav ? "text-black" : "text-white"}`}
               >
-                <motion.div className="flex flex-col space-y-6 items-center text-white text-2xl font-bold">
-                  {[
-                    { href: "#inicio", text: "Inicio" },
-                    { href: "#empresa", text: "Empresa" },
-                    { href: "#servicios", text: "Servicios" },
-                    { href: "#contacto", text: "Contacto" },
-                  ].map((item) => (
-                    <motion.a
-                      key={item.href}
-                      href={item.href}
-                      onClick={closeMenu}
-                      variants={itemVariants}
-                      className="relative py-2 px-4 hover:text-orange-500 transition-colors duration-300"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {item.text}
-                      <motion.span
-                        className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500"
-                        initial={{ scaleX: 0 }}
-                        whileHover={{ scaleX: 1 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </motion.a>
-                  ))}
-
-                  <motion.div className="pt-8 flex space-x-6" variants={itemVariants}>
-                    <motion.a
-                      href="#"
-                      whileHover={{ scale: 1.2, color: "#4267B2" }}
-                      className="text-white hover:text-orange-500"
-                    >
-                      <Facebook size={24} />
-                    </motion.a>
-                    <motion.a
-                      href="#"
-                      whileHover={{ scale: 1.2, color: "#E1306C" }}
-                      className="text-white hover:text-orange-500"
-                    >
-                      <Instagram size={24} />
-                    </motion.a>
-                    <motion.a
-                      href="#"
-                      whileHover={{ scale: 1.2, color: "#1DA1F2" }}
-                      className="text-white hover:text-orange-500"
-                    >
-                      <Twitter size={24} />
-                    </motion.a>
-                  </motion.div>
-                </motion.div>
-              </motion.nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.header>
+                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+              </svg>
+            ) : (
+              // SVG MENU
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={`lucide lucide-menu-icon lucide-menu transition-transform duration-300 ${effectiveNav ? "text-black" : "text-white"}`}
+              >
+                <path d="M4 12h16"/><path d="M4 18h16"/><path d="M4 6h16"/>
+              </svg>
+            )}
+          </button>
+        </div>
+        {/* Mobile Menu */}
+        <div
+          className={`md:hidden fixed left-0 top-[100%] w-full z-50 bg-white transition-all duration-300 ease-in-out
+            ${menuOpen ? "opacity-100 pointer-events-auto translate-y-0" : "opacity-0 pointer-events-none -translate-y-4"}`}
+          style={{ boxShadow: menuOpen ? "0 8px 32px rgba(0,0,0,0.12)" : "none" }}
+        >
+          <nav>
+            <ul className="flex flex-col items-center py-6 space-y-4 text-black font-bold">
+              <li><a href="#inicio" onClick={() => setMenuOpen(false)}>Inicio</a></li>
+              <li><a href="#empresa" onClick={() => setMenuOpen(false)}>Empresa</a></li>
+              <li><a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a></li>
+              <li><a href="#contacto" onClick={() => setMenuOpen(false)}>Contacto</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
 
       {/* Hero Section */}
       <section
